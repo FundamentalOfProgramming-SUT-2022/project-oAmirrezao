@@ -2078,6 +2078,202 @@ void find()
     }
 }*/
 
+void grep()
+{
+    char str[MAX_CMD];
+    scanf("%s", str);
+    getchar();
+    if(!strcmp(str, "--str"))
+    {
+        char text_to_find[MAX];
+        getchar();
+        char ch = getchar();
+        printf("%c\n", ch);
+        int a = 0;
+        while(ch!='\"')
+        {
+            text_to_find[a] = ch;
+            a++;
+            ch = getchar();
+        }
+        str[a] = '\0';
+        char files[MAX_CMD];
+        scanf("%s", files);printf("%s\n", text_to_find);
+        if(!strcmp(files, "--files"))
+        {
+            char file_name[MAX];
+            scanf("%s", file_name);
+            char c1 = getchar();
+            FILE* fptr = fopen(file_name, "r");
+            if(fptr == NULL)
+            {
+                printf("there is no such a file\n");
+            }
+            else
+            {
+                char file_text[MAX];
+                fscanf(fptr, "%s", file_text);
+                        char *p1, *p2, *p3;
+                        int i = 0, j = 0, flag = 0, check = 0, word = 1;
+                        p1 = file_text;
+                        p2 = text_to_find;
+                        for(i = 0; i<strlen(file_text); i++)
+                        {
+                            if(*p1 != 32 && *(p1+1) == 32)
+                            {
+                                word++ ;
+                            }
+                            if(*p1 == *p2)
+                            {
+                                p3 = p1;
+                                for(j = 0; j<strlen(text_to_find); j++)
+                                {
+                                    if(*p3 == *p2)
+                                    {
+                                        p3++;p2++;
+                                    }
+                                    else
+                                        break;
+                                }
+                                p2 = text_to_find;
+                                if(j == strlen(text_to_find))
+                                {
+                                    flag = 1;
+                                    check = 1;
+                                    printf("%s: ", file_name);
+                                    for(int k = i;file_text[k]!=text_to_find[strlen(text_to_find)-1];k++)
+                                    {
+                                        printf("%c", file_text[k]);
+                                    }
+                                    printf("\n");
+                                }
+                            }
+                            p1++ ;
+                        }
+                        if(flag == 0)
+                        {
+                            printf("pattern not found!\n");//haminja tabe ro tamom kon
+                        }
+                        if(c1 == 32)
+                        {
+                            char file_name2[MAX];
+                            scanf("%s", file_name2);
+                            FILE* fptr2 = fopen(file_name2, "r");
+                            if(fptr2 == NULL)
+                            {
+                                printf("there is no such a file(file2)\n");
+                            }
+                            else
+                            {
+                        char file_text[MAX];
+                        fscanf(fptr, "%s", file_text);
+                        char *p1, *p2, *p3;
+                        int i = 0, j = 0, flag = 0, check = 0, word = 1;
+                        p1 = file_text;
+                        p2 = text_to_find;
+                        for(i = 0; i<strlen(file_text); i++)
+                        {
+                            if(*p1 != 32 && *(p1+1) == 32)
+                            {
+                                word++ ;
+                            }
+                            if(*p1 == *p2)
+                            {
+                                p3 = p1;
+                                for(j = 0; j<strlen(text_to_find); j++)
+                                {
+                                    if(*p3 == *p2)
+                                    {
+                                        p3++;p2++;
+                                    }
+                                    else
+                                        break;
+                                }
+                                p2 = text_to_find;
+                                if(j == strlen(text_to_find))
+                                {
+                                    flag = 1;
+                                    check = 1;
+                                    printf("%s: ", file_name);
+                                    for(int k = i;file_text[k]!=text_to_find[strlen(text_to_find)-1];k++)
+                                    {
+                                        printf("%c", file_text[k]);
+                                    }
+                                    printf("\n");
+                                }
+                            }
+                            p1++ ;
+                        }
+                        if(flag == 0)
+                        {
+                            printf("pattern not found!\n");//haminja tabe ro tamom kon
+                        }
+                            }
+                        }
+            }
+        }
+        else
+        {
+            printf("invalid command(--files)\n");
+        }
+    }
+    else
+    {
+        printf("invalid command(--str)\n");
+    }
+}
+
+/*void compare()
+{
+    char file_name1[MAX], file_name2[MAX];
+    FILE* fptr1 = fopen(file_name1, "r");
+    FILE* fptr2 = fopen(file_name2, "r");
+    int start1, start2;
+    if(fptr1==NULL || fptr2==NULL)
+    {
+        printf("there is no such a file\n");
+    }
+    else
+    {
+        char file_text1[MAX], file_text2[MAX];
+        fscanf(fptr1, "%s", file_text1);
+        fscanf(fptr2, "%s", file_text2);
+        int line1 = 1, line2 = 1;
+        int line11, line21;
+        line11 = how_many_lines(file_text1);
+        line21 = how_many_lines(file_text2);
+        for(int i = 0; i<=(min(line11, line21)); i++)
+        {
+            if(file_text1[i]!=file_text2[i] && (line1 == line2))
+            {
+                printf("====#line number:%d====", line);
+                for(int k = start1; file_text1[k]!=10; k++)
+                {
+                    printf("%c", file_text1[k]);
+                }
+                printf("\n");
+                for(int l = start2; file_text2[l]!=10; l++)
+                {
+                    printf("%c", file_text2[l]);
+                }
+                printf("\n");
+                
+                
+            }
+            if(file_text1[i]==10)
+            {
+                start1 = i;
+                line1++ ;
+            }
+            if(file_text2[i]==10)
+            {
+                start2 = i;
+                line2++ ;
+            }
+        }
+    }
+}*/
+
 int main()
 {
     char command[MAX_CMD];
@@ -2114,6 +2310,11 @@ int main()
         else if(!strcmp(command, "find"))
         {
             find();
+            continue;
+        }
+        else if(!strcmp(command, "grep"))
+        {
+            grep();
             continue;
         }
         else if(!strcmp(command, "exit"))
